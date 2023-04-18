@@ -62,4 +62,19 @@
 	input {
 		@apply text-[#282828];
 	}
+
+	@media all and (max-width: 420px) {
+		.input-position {
+			@apply h-16 w-[85%];
+		}
+
+		input,
+		input::placeholder {
+			@apply text-base;
+		}
+
+		.material-icons {
+			@apply text-3xl;
+		}
+	}
 </style>

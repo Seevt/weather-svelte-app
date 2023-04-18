@@ -9,6 +9,7 @@
 		let icon_code = icon_url.match(regex);
 		return `/icons/${weather.isDay ? 'day' : 'night'}/${icon_code[2]}.svg`;
 	}
+	$: newStatus = weather.weatherStatus.split('').length ? '' : '';
 </script>
 
 <main class="weather" style={`margin: ${searchHeight}px 0 0 0`}>
@@ -17,11 +18,17 @@
 			<!-- buscar que no se renderizen ambos a la vez -->
 			<div class="status-1">
 				<p class="pl-1">
-					{weather.name}, {weather.country} As of {localTime[1]}
-					{localTime[1] > '12' ? 'pm' : 'am'}
+					{weather.name}, {weather.country}
+					<span>
+						As of {localTime[1]}
+
+						{localTime[1] > '12' ? 'pm' : 'am'}
+					</span>
 				</p>
-				<p class="text-8xl font-extrabold">{Math.round(weather.temperature)}ºC</p>
-				<p class="pl-1">{weather.weatherStatus}</p>
+				<div class="temp-and-condition pl-1">
+					<p>{Math.round(weather.temperature)}ºC</p>
+					<p>{weather.weatherStatus}</p>
+				</div>
 			</div>
 		{/key}
 
@@ -49,27 +56,35 @@
 	</div>
 
 	<hr />
-	<h3 class="text-3xl font-bold">Hourly Forecast</h3>
+	<h3 id="hours-header" class="text-3xl font-bold">Hourly Forecast</h3>
 	<div class="hours">
 		<div class="time">
+			<div class="forecast-temp-and-condition">
+				<img src={getIcon(hourlyForecast[8].condition.icon)} alt="" />
+				<p>{hourlyForecast[8].condition.text}</p>
+			</div>
 			<p>{hourlyForecast[8].time.split(' ')[1]}</p>
-			<img src={getIcon(hourlyForecast[8].condition.icon)} alt="" />
-			<p>{hourlyForecast[8].condition.text}</p>
 		</div>
 		<div class="time">
+			<div class="forecast-temp-and-condition">
+				<img src={getIcon(hourlyForecast[12].condition.icon)} alt="" />
+				<p>{hourlyForecast[12].condition.text}</p>
+			</div>
 			<p>{hourlyForecast[12].time.split(' ')[1]}</p>
-			<img src={getIcon(hourlyForecast[12].condition.icon)} alt="" />
-			<p>{hourlyForecast[12].condition.text}</p>
 		</div>
 		<div class="time">
+			<div class="forecast-temp-and-condition">
+				<img src={getIcon(hourlyForecast[16].condition.icon)} alt="" />
+				<p>{hourlyForecast[16].condition.text}</p>
+			</div>
 			<p>{hourlyForecast[16].time.split(' ')[1]}</p>
-			<img src={getIcon(hourlyForecast[16].condition.icon)} alt="" />
-			<p>{hourlyForecast[16].condition.text}</p>
 		</div>
 		<div class="time">
+			<div class="forecast-temp-and-condition">
+				<img src={getIcon(hourlyForecast[20].condition.icon)} alt="" />
+				<p>{hourlyForecast[20].condition.text}</p>
+			</div>
 			<p>{hourlyForecast[20].time.split(' ')[1]}</p>
-			<img src={getIcon(hourlyForecast[20].condition.icon)} alt="" />
-			<p>{hourlyForecast[20].condition.text}</p>
 		</div>
 	</div>
 </main>
@@ -95,8 +110,16 @@
 		@apply text-2xl;
 	}
 
-	.status-1 p:last-of-type {
-		@apply text-4xl;
+	.temp-and-condition {
+		@apply flex flex-col gap-2;
+	}
+
+	.temp-and-condition p:first-of-type {
+		@apply text-5xl font-extrabold;
+	}
+
+	.temp-and-condition p:last-of-type {
+		@apply text-4xl font-semibold;
 	}
 
 	.status-2 {
@@ -116,7 +139,7 @@
 	}
 
 	.category p {
-		@apply text-base  mb-1 font-semibold;
+		@apply text-lg  mb-1 font-semibold;
 	}
 
 	.category span {
@@ -126,6 +149,55 @@
 	.climate-icon {
 		@apply h-[60%];
 		object-fit: cover;
+	}
+
+	@media all and (max-width: 420px) {
+		.weather {
+			@apply w-[85%];
+		}
+
+		.more-info {
+			grid-template-columns: repeat(2, 1fr);
+			justify-content: space-between;
+			@apply px-0;
+		}
+
+		.category span {
+			@apply text-xl;
+		}
+
+		.status-1 {
+			@apply w-4/6;
+		}
+
+		.status-1 p:first-of-type {
+			@apply text-xl;
+		}
+
+		.status-1 p span {
+			display: none;
+		}
+
+		.status-2 img {
+			@apply h-16;
+		}
+
+		.temp-and-condition {
+			@apply flex-col gap-0;
+		}
+
+		.temp-and-condition p:first-of-type {
+			@apply font-extrabold text-3xl;
+		}
+		.temp-and-condition p:last-of-type {
+			@apply h-fit;
+			margin: 0;
+			font-size: 1.5rem !important;
+		}
+
+		.climate-icon {
+			@apply h-[25%];
+		}
 	}
 
 	hr {
@@ -140,18 +212,53 @@
 	}
 
 	.time {
-		@apply flex flex-col  items-center;
-	}
-
-	.time p:first-of-type {
-		@apply text-lg font-bold;
+		@apply flex flex-col gap-1  items-center;
 	}
 
 	.time p:last-of-type {
-		@apply text-center text-base font-bold;
+		@apply text-center text-xl font-bold;
 	}
 
-	.time img {
-		@apply w-10 h-10;
+	.forecast-temp-and-condition {
+		@apply flex gap-1  flex-col items-center justify-start;
+	}
+
+	.forecast-temp-and-condition img {
+		@apply h-12;
+	}
+	.forecast-temp-and-condition p {
+		font-size: 1.2rem !important;
+	}
+
+	@media all and (max-width: 420px) {
+		.hours {
+			display: flex;
+			flex-direction: column;
+			@apply gap-4 p-0;
+		}
+
+		.time {
+			@apply flex-row  justify-between;
+		}
+
+		.forecast-temp-and-condition {
+			@apply flex flex-row items-center gap-4 w-[70%];
+		}
+
+		.forecast-temp-and-condition img {
+			@apply h-12;
+		}
+
+		.forecast-temp-and-condition p {
+			font-size: 1rem !important;
+		}
+
+		.time p:last-of-type {
+			@apply text-lg;
+		}
+
+		#hours-header {
+			@apply text-xl;
+		}
 	}
 </style>
