@@ -158,7 +158,7 @@
 
 	@media all and (max-width: 420px) {
 		.weather {
-			@apply pb-4 w-[85%];
+			@apply pb-6 w-[85%];
 		}
 
 		.more-info {
