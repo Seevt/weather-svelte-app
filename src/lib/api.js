@@ -5,3 +5,5 @@ export const options = {
 		'X-RapidAPI-Host': 'weatherapi-com.p.rapidapi.com'
 	}
 };
+
+//api keys
