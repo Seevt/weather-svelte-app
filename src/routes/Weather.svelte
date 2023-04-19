@@ -96,7 +96,7 @@
 
 <style lang="postcss">
 	.weather {
-		@apply flex flex-col gap-6 w-2/4  bg-transparent;
+		@apply flex flex-col gap-5 w-2/4  bg-transparent;
 		min-height: 100%;
 		backdrop-filter: blur(0px);
 		color: white;
