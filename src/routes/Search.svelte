@@ -5,7 +5,7 @@
 	let search = '';
 
 	function handleInput(e) {
-		if (e.keyCode === 13 && search !== '') {
+		if ((e.keyCode === 13 || e.key === 'Enter') && search !== '') {
 			if (clicked) {
 				onSearch();
 			} else {
@@ -42,7 +42,7 @@
 <style lang="postcss">
 	.input-position {
 		@apply absolute w-2/4 h-20 bg-white rounded-xl;
-		transition: all 350ms ease-out;
+		transition: all 500ms ease;
 	}
 
 	.input-holder {
