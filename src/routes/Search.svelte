@@ -5,7 +5,7 @@
 	let search = '';
 
 	function handleInput(e) {
-		if ((e.keyCode === 13 || e.key === 'Enter') && search !== '') {
+		if (e.key === 'Enter' && search !== '') {
 			if (clicked) {
 				onSearch();
 			} else {

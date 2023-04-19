@@ -1,4 +1,5 @@
 <script>
+	import { fade } from 'svelte/transition';
 	export let searchHeight;
 	export let weather;
 	let localTime = weather.localtime.split(' ');
@@ -12,25 +13,29 @@
 	$: newStatus = weather.weatherStatus.split('').length ? '' : '';
 </script>
 
-<main class="weather" style={`margin: ${searchHeight}px 0 0 0`}>
+<main
+	transition:fade={{
+		duration: 900,
+	}}
+	class="weather"
+	style={`margin: ${searchHeight}px 0 0 0`}
+>
 	<div class="weather-container">
-		{#key weather?.name}
-			<!-- buscar que no se renderizen ambos a la vez -->
-			<div class="status-1">
-				<p class="pl-1">
-					{weather.name}, {weather.country}
-					<span>
-						As of {localTime[1]}
+		<!-- buscar que no se renderizen ambos a la vez -->
+		<div class="status-1">
+			<p class="pl-1">
+				{weather.name}, {weather.country}
+				<span>
+					As of {localTime[1]}
 
-						{localTime[1] > '12' ? 'pm' : 'am'}
-					</span>
-				</p>
-				<div class="temp-and-condition pl-1">
-					<p>{Math.round(weather.temperature)}ºC</p>
-					<p>{weather.weatherStatus}</p>
-				</div>
+					{localTime[1] > '12' ? 'pm' : 'am'}
+				</span>
+			</p>
+			<div class="temp-and-condition pl-1">
+				<p>{Math.round(weather.temperature)}ºC</p>
+				<p>{weather.weatherStatus}</p>
 			</div>
-		{/key}
+		</div>
 
 		<div class="status-2">
 			<img class="climate-icon" src={getIcon(weather.icon)} alt="weather status icon" />

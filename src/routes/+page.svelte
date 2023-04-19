@@ -4,6 +4,7 @@
 	import Search from './Search.svelte';
 	import { fade } from 'svelte/transition';
 	import { options } from '$lib/api.js';
+	import { cubicInOut } from 'svelte/easing';
 
 	let searchHeight;
 	let searchInput;
@@ -41,7 +42,7 @@
 					code,
 					weatherStatus: text,
 					icon,
-					today
+					today,
 				};
 				return weather;
 			});
@@ -56,7 +57,10 @@
 <main class="app gap-2">
 	{#key weather?.isDay}
 		<div
-			transition:fade
+			transition:fade={{
+				duration: 900,
+				easing: cubicInOut,
+			}}
 			id="background"
 			class={weather?.isDay === undefined
 				? 'bg-default'
