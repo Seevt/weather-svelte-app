@@ -83,7 +83,7 @@
 	#background {
 		position: fixed;
 		width: 100%;
-		min-height: 100%;
+		min-height: 100vh;
 		background-size: cover;
 		top: 0;
 		z-index: -1;
