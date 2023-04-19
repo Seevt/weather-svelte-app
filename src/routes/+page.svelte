@@ -8,6 +8,7 @@
 
 	let searchHeight;
 	let searchInput;
+	let isLoading = false;
 
 	onMount(() => {
 		const search = document.getElementById('search');
@@ -20,9 +21,11 @@
 	let weather;
 
 	function fetchWeather() {
+		isLoading = true;
 		fetch(`https://weatherapi-com.p.rapidapi.com/forecast.json?q=${searchInput}&days=3`, options)
 			.then((response) => response.json())
 			.then((response) => {
+				isLoading = false;
 				const { location, current, forecast } = response;
 				const { country, name, localtime } = location;
 				const { condition, temp_c, feelslike_c, humidity, is_day, pressure_mb, wind_kph } = current;
@@ -70,7 +73,9 @@
 		/>
 	{/key}
 	<Search on:search={handleSearch} />
-	{#if weather}
+	{#if isLoading}
+		<p class="loader">Loading...</p>
+	{:else if weather}
 		<Weather {weather} {searchHeight} />
 	{/if}
 </main>
@@ -78,6 +83,11 @@
 <style lang="postcss">
 	.app {
 		@apply relative  flex flex-col justify-start items-center w-full min-h-screen;
+	}
+
+	.loader {
+		position: absolute;
+		top: 50%;
 	}
 
 	#background {
