@@ -8,6 +8,7 @@
 		if (e.key === 'Enter' && search !== '') {
 			if (clicked) {
 				onSearch();
+				blurInput();
 			} else {
 				clicked = true;
 			}
@@ -17,6 +18,10 @@
 	function onSearch() {
 		dispatch('search', { search: search });
 		search = '';
+	}
+
+	function blurInput() {
+		document.activeElement.blur();
 	}
 </script>
 
