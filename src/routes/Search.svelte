@@ -5,15 +5,16 @@
 	let search = '';
 
 	function handleInput(e) {
+		e.preventDefault();
 		if (e.key === 'Enter' && search !== '') {
 			if (clicked) {
 				onSearch();
 				document.activeElement.blur();
-				console.log(document.activeElement);
+				// console.log(document.activeElement);
 			} else {
 				clicked = true;
 				document.activeElement.blur();
-				console.log(document.activeElement);
+				// console.log(document.activeElement);
 			}
 		}
 	}
