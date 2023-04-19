@@ -5,6 +5,7 @@
 	import { fade } from 'svelte/transition';
 	import { options } from '$lib/api.js';
 	import { cubicInOut } from 'svelte/easing';
+	import Loader from './Loader.svelte';
 
 	let searchHeight;
 	let searchInput;
@@ -74,7 +75,7 @@
 	{/key}
 	<Search on:search={handleSearch} />
 	{#if isLoading}
-		<p class="loader">Loading...</p>
+		<Loader />
 	{:else if weather}
 		<Weather {weather} {searchHeight} />
 	{/if}
