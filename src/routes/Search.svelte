@@ -5,7 +5,6 @@
 	let search = '';
 
 	function handleInput(e) {
-		e.preventDefault();
 		if (e.key === 'Enter' && search !== '') {
 			if (clicked) {
 				onSearch();
