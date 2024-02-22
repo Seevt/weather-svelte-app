@@ -58,69 +58,57 @@
 	}
 </script>
 
-<main class="app gap-2">
-	{#key weather?.isDay}
-		<div
-			transition:fade={{
-				duration: 900,
-				easing: cubicInOut,
-			}}
-			id="background"
-			class={weather?.isDay === undefined
-				? 'bg-default'
-				: weather?.isDay === 1
-				? 'bg-day'
-				: 'bg-night'}
-		/>
-	{/key}
-	<Search on:search={handleSearch} />
-	{#if isLoading}
-		<Loader />
-	{:else if weather}
-		<Weather {weather} {searchHeight} />
-	{/if}
+<main
+	transition:fade={{
+		duration: 900,
+		easing: cubicInOut,
+	}}
+	style={weather?.isDay === undefined
+		? 'background-image: linear-gradient(to bottom, rgba(0, 0, 0, 0.3) 0%, rgba(0, 0, 0, 0.3) 100%), url(https://r4.wallpaperflare.com/wallpaper/132/401/75/painting-clouds-sky-landscape-wallpaper-57bfb2f40fd59f8acf4284a1e191c785.jpg)'
+		: weather?.isDay === 1
+		? 'background-image: linear-gradient(to bottom, rgba(0, 0, 0, 0.3) 0%, rgba(0, 0, 0, 0.3) 100%), url(https://r4.wallpaperflare.com/wallpaper/880/841/120/mountains-forest-artwork-firewatch-wallpaper-82f06d94b7ca2320baa2a4bd5d75257d.jpg)'
+		: 'background-image: linear-gradient(to bottom, rgba(0, 0, 0, 0.3) 0%, rgba(0, 0, 0, 0.3) 100%), url(https://r4.wallpaperflare.com/wallpaper/615/294/495/artwork-deer-antlers-forest-wallpaper-3990080df11a5d7b7687880f2011c67d.jpg)'}
+>
+	<div class="box">
+		<div class="center">
+			<div class="stack">
+				<Search on:search={handleSearch} />
+
+				{#if isLoading}
+					<Loader />
+				{:else if weather}
+					<Weather {weather} {searchHeight} />
+				{/if}
+			</div>
+		</div>
+	</div>
 </main>
 
-<style lang="postcss">
-	.app {
-		@apply relative  flex flex-col justify-start items-center w-full min-h-screen;
-	}
-
-	.loader {
-		position: absolute;
-		top: 50%;
-	}
-
-	#background {
-		position: fixed;
-		width: 100%;
-		min-height: 100vh;
+<style>
+	main {
+		display: grid;
+		grid-template-columns: 1fr;
+		min-height: 100svh;
+		background: hsl(255, 0%, 25%);
 		background-size: cover;
-		top: 0;
-		z-index: -1;
+		background-position: center center;
+		background-image: linear-gradient(rgba(0, 0, 0, 0.5));
 	}
 
-	.bg-default {
-		background-image: url(https://r4.wallpaperflare.com/wallpaper/132/401/75/painting-clouds-sky-landscape-wallpaper-57bfb2f40fd59f8acf4284a1e191c785.jpg);
+	.box {
+		padding-inline: 1rem;
 	}
 
-	.bg-day {
-		background-image: url(https://r4.wallpaperflare.com/wallpaper/880/841/120/mountains-forest-artwork-firewatch-wallpaper-82f06d94b7ca2320baa2a4bd5d75257d.jpg);
+	.center {
+		position: relative;
+		height: 100%;
+		width: min(100%, 65ch);
+		margin-inline: auto;
 	}
 
-	.bg-night {
-		background-image: url(https://r4.wallpaperflare.com/wallpaper/615/294/495/artwork-deer-antlers-forest-wallpaper-3990080df11a5d7b7687880f2011c67d.jpg);
-	}
-
-	.app::before {
-		content: '';
-		position: absolute;
-		top: 0;
-		left: 0;
-		right: 0;
-		bottom: 0;
-		z-index: -0;
-		opacity: 0.5;
-		background-color: rgba(0, 0, 0, 0.6);
+	.stack {
+		display: flex;
+		flex-direction: column;
+		height: inherit;
 	}
 </style>
