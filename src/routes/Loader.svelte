@@ -210,6 +210,7 @@
 	main {
 		position: absolute;
 		top: 45%;
+		align-self: center;
 	}
 
 	.pl {
