@@ -9,13 +9,17 @@
 			if (clicked) {
 				onSearch();
 				document.activeElement.blur();
-				// console.log(document.activeElement);
 			} else {
 				clicked = true;
 				document.activeElement.blur();
-				// console.log(document.activeElement);
 			}
 		}
+	}
+
+	function handleClick() {
+		clicked = true;
+		onSearch();
+		document.activeElement.blur();
 	}
 
 	function onSearch() {
@@ -30,55 +34,63 @@
 	class="input-position my-4"
 	style={`top: ${clicked ? '0' : '45%'}`}
 >
-	<div class="input-holder">
-		<span style="border-radius: 30%" class="material-icons absolute right-2"> search </span>
-		<span class="material-icons text-[#EA4335] absolute left-2" left> place </span>
+	<div class="input-wrapper">
+		<span role="img" aria-label="Place" class="material-icons">place</span>
 		<input
 			bind:value={search}
 			on:keydown={handleInput}
 			type="text"
-			placeholder="Enter your location"
-			class="focus:outline-none font-semibold text-lg px-12 bg-transparent h-full w-full rounded-lg"
+			placeholder="Please enter a city..."
 		/>
+		<button on:click={handleClick} type="button">
+			<span class="material-icons">search</span>
+		</button>
 	</div>
 </div>
 
-<style lang="postcss">
+<style>
 	.input-position {
-		@apply absolute w-2/4 h-20 bg-white rounded-xl;
+		position: absolute;
+		height: 5rem;
+		background-color: white;
+		border-radius: 0.75rem;
 		transition: all 500ms ease;
+		width: min(100%, 65ch);
 	}
 
-	.input-holder {
-		@apply relative bg-transparent flex items-center h-full w-full rounded-lg;
-		transition: transform 350ms ease-out;
-	}
-
-	.material-icons {
-		@apply text-4xl;
-	}
-
-	input,
-	input::placeholder {
-		@apply text-2xl;
+	.input-wrapper {
+		--spacing: 0.5rem;
+		display: grid;
+		grid-template-columns: auto 1fr auto;
+		height: 100%;
+		gap: var(--spacing);
+		padding-inline: var(--spacing);
 	}
 
 	input {
-		@apply text-[#282828];
+		min-width: 0;
+		font-size: var(--step-1);
+		font-weight: 600;
 	}
 
-	@media all and (max-width: 420px) {
-		.input-position {
-			@apply h-16 w-[85%];
-		}
+	input::placeholder {
+		font-size: var(--step-1);
+	}
 
-		input,
-		input::placeholder {
-			@apply text-base;
-		}
+	input:focus {
+		outline: none;
+	}
 
-		.material-icons {
-			@apply text-3xl;
-		}
+	span {
+		align-self: center;
+		font-size: 2rem;
+	}
+
+	span[role='img'] {
+		color: #ea4335;
+	}
+
+	span:last-of-type {
+		cursor: pointer;
 	}
 </style>
