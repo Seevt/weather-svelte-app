@@ -88,7 +88,7 @@
 	main {
 		display: grid;
 		grid-template-columns: 1fr;
-		min-height: 100svh;
+		min-height: 100dvh;
 		background: hsl(255, 0%, 25%);
 		background-size: cover;
 		background-position: center center;
